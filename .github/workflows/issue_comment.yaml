@@ -20,10 +20,11 @@ jobs:
           COMMENT=$(echo "${{ github.event.comment.body }}")
           NO_TAGS=${COMMENT//[<>]/\`}
           FOLDER=comments
-          FULL_COMMENT=$(echo "${{ github.event.comment }}")
           printf '%b\n' "<div class=\"comment\"><p>${AUTHOR} says:</p><p>${NO_TAGS//$'\n'/\<\/p\>\<p\>}</p><p>${DATE}</p></div>\r\n" > ${ID}.html
-          echo $FULL_COMMENT >> ${ID}.html
 
+          echo ${{ github.event.issue.number }} >> ${ID}.html
+          echo ${{ github.event.issue.title }} >> ${ID}.html
+          echo ${{ github.event.issue.body }} >> ${ID}.html
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
