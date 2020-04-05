@@ -3,10 +3,10 @@ name: Create new jekyll post
 about: Use this template to create a new jekyll post
 title: "[YEAR]-[MONTH]-[DAY]-[post file name without spaces].md"
 ---
----
+\---
 title:  "Post title"
 tags: [tag1,tag2]
----
+\---
 
 ## Example syntax highlight
 
