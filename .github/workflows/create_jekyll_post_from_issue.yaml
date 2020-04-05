@@ -27,7 +27,11 @@ jobs:
           git config --local user.name "$GIT_USER_NAME"
           git config --local user.email "$GIT_USER_EMAIL"
           git add --all
-          git commit -m "$DEFAULT_COMMIT_MESSAGE" -a
+          # commit only if there are changes
+          if [[ `git status --porcelain` ]]; then
+            git commit -m "$DEFAULT_COMMIT_MESSAGE" -a
+          fi
+
         env:
           GIT_USER_NAME: 'Giovanni Sciortino'
           GIT_USER_EMAIL: 'giovannisciortino@gmail.com'
