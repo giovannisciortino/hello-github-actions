@@ -1,43 +1,37 @@
-name: A workflow for my Hello World file
+name: A workflow to create a jekyll post from github issue
 on:
   issue_comment:
     types: [created, deleted]
 jobs:
   build:
-    name: Hello world action
+    name: A job to create a jekyll post from github issue
     runs-on: ubuntu-latest
     if: github.event.comment.body == 'publish'
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout master branch
+        uses: actions/checkout@master
+
       - name: Create jekyll post file
         if: success() && github.event.issue.user.login == 'giovannisciortino'
         run: |
-          POST_DIRECTORY="_posts"
-
-          cat << 'EOF' >> $POST_DIRECTORY/${{ github.event.issue.title }}
+          cat << 'EOF' > $POST_DIRECTORY/${{ github.event.issue.title }}
           ${{ github.event.issue.body }}
           EOF
+        env:
+          GITHUB_ACCOUNT_JEKYLL_OWNER: 'giovannisciortino'
+          POST_DIRECTORY: '_posts'
 
-          ID=${{ github.event.comment.id }}
-          AUTHOR=${{ github.event.comment.user.login }}
-          DATE=${{ github.event.comment.created_at }}
-          COMMENT=$(echo "${{ github.event.comment.body }}")
-          NO_TAGS=${COMMENT//[<>]/\`}
-          FOLDER=comments
-          printf '%b\n' "<div class=\"comment\"><p>${AUTHOR} says:</p><p>${NO_TAGS//$'\n'/\<\/p\>\<p\>}</p><p>${DATE}</p></div>\r\n" > ${ID}.html
-
-          echo "${{ github.event.issue.number }}"
-          echo "${{ github.event.issue.title }}"
-          echo ""
-
-          echo "${{ github.event.comment.body }}"
       - name: Commit files
         if: success()
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name '$GIT_USER_NAME'
+          git config --local user.email '$GIT_USER_EMAIL'
           git add --all
           git commit -m "Add changes" -a
+        env:
+          GIT_USER_NAME: 'Giovanni Sciortino'
+          GIT_USER_EMAIL: 'giovannisciortino@gmail.com'
+
       - name: Push changes
         if: success()
         uses: ad-m/github-push-action@master
