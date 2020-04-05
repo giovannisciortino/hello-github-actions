@@ -23,6 +23,8 @@ jobs:
           echo "${{ github.event.issue.number }}"
           echo "${{ github.event.issue.title }}"
           echo "${{ github.event.issue.body }}"
+
+          echo "${{ github.event.comment.body }}"
       - name: Commit files
         if: success()
         run: |
