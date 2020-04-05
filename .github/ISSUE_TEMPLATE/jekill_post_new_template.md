@@ -16,7 +16,7 @@ tags: [tag1,tag2]
 
 ## Example link
 
-Link [https://github.com/jprante/elasticsearch-jdbc](https://github.com/jprante/elasticsearch-jdbc)
+Link [https://github.com/](https://github.com/)
 
 ## Example image
 
