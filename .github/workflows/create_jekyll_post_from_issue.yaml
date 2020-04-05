@@ -12,6 +12,13 @@ jobs:
       - name: Create jekyll post file
         if: success() && github.event.issue.user.login = "giovannisciortino"
         run: |
+          POST_DIRECTORY="_posts"
+          mkdir $POST_DIRECTORY
+
+          cat << 'EOF' >> $POST_DIRECTORY/${{ github.event.issue.title }}
+          ${{ github.event.issue.body }}
+          EOF
+
           ID=${{ github.event.comment.id }}
           AUTHOR=${{ github.event.comment.user.login }}
           DATE=${{ github.event.comment.created_at }}
@@ -22,7 +29,7 @@ jobs:
 
           echo "${{ github.event.issue.number }}"
           echo "${{ github.event.issue.title }}"
-          echo "${{ github.event.issue.body }}"
+          echo ""
 
           echo "${{ github.event.comment.body }}"
       - name: Commit files
