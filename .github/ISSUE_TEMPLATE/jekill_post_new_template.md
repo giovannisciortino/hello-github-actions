@@ -1,7 +1,7 @@
 ---
 name: Create new jekyll post
 about: Use this template to create a new jekyll post
-title: "[YEAR]-[YEAR]-[date]-[post file name without spaces].md"
+title: "[YEAR]-[MONTH]-[DAY]-[post file name without spaces].md"
 ---
 ---
 title:  "Post title"
