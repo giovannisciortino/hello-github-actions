@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Create jekyll post file
-        if: success() && github.event.issue.user.login = 'giovannisciortino'
+        if: success() && github.event.issue.user.login == 'giovannisciortino'
         run: |
           POST_DIRECTORY="_posts"
           mkdir $POST_DIRECTORY
