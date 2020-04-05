@@ -1,7 +1,7 @@
 name: A workflow to create a jekyll post from github issue
 on:
   issue_comment:
-    types: [created, deleted]
+    types: [created]
 jobs:
   build:
     name: A job to create a jekyll post from github issue
@@ -31,7 +31,6 @@ jobs:
           if [[ `git status --porcelain` ]]; then
             git commit -m "$DEFAULT_COMMIT_MESSAGE" -a
           fi
-
         env:
           GIT_USER_NAME: 'Giovanni Sciortino'
           GIT_USER_EMAIL: 'giovannisciortino@gmail.com'
