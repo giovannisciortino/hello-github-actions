@@ -1,0 +1,38 @@
+name: A workflow for my Hello World file
+on:
+  issue_comment:
+    types: [created, deleted]
+jobs:
+  build:
+    name: Hello world action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Create local changes
+        run: |
+          date >> test_file
+
+      - name: Turn comment into file
+        run: |
+          ID=${{ github.event.comment.id }}
+          AUTHOR=${{ github.event.comment.user.login }}
+          DATE=${{ github.event.comment.created_at }}
+          COMMENT=$(echo "${{ github.event.comment.body }}")
+          NO_TAGS=${COMMENT//[<>]/\`}
+          FOLDER=comments
+          printf '%b\n' "<div class=\"comment\"><p>${AUTHOR} says:</p><p>${NO_TAGS//$'\n'/\<\/p\>\<p\>}</p><p>${DATE}</p></div>\r\n" > ${ID}.html
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add --all
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
