@@ -13,7 +13,6 @@ jobs:
         if: success() && github.event.issue.user.login == 'giovannisciortino'
         run: |
           POST_DIRECTORY="_posts"
-          mkdir $POST_DIRECTORY
 
           cat << 'EOF' >> $POST_DIRECTORY/${{ github.event.issue.title }}
           ${{ github.event.issue.body }}
