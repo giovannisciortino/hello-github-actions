@@ -9,8 +9,8 @@ jobs:
     if: github.event.comment.body == 'publish'
     steps:
       - uses: actions/checkout@master
-      - name: Turn comment into file
-        if: success()
+      - name: Create jekyll post file
+        if: success() && github.event.issue.user.login = "giovannisciortino"
         run: |
           ID=${{ github.event.comment.id }}
           AUTHOR=${{ github.event.comment.user.login }}
