@@ -6,7 +6,7 @@ jobs:
   build:
     name: Hello world action
     runs-on: ubuntu-latest
-    if: github.event.comment.body == github.event.comment.body
+    if: github.event.comment.body == "publish"
     steps:
       - uses: actions/checkout@master
       - name: Turn comment into file
